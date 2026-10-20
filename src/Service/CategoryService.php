@@ -3,16 +3,6 @@
 namespace App\Service;
 
 use App\Repository\CategoryRepository;
-<<<<<<< HEAD
-use App\Entity\Category;
-use App\Utils\Tools;
-
-class CategoryService
-{
-    private CategoryRepository $categoryRepository;
-
-    //injection de dépendance
-=======
 
 class CategoryService
 {
@@ -20,7 +10,6 @@ class CategoryService
     private CategoryRepository $categoryRepository;
 
     // 4. Constructeur : instanciation de CategoryRepository
->>>>>>> main
     public function __construct()
     {
         $this->categoryRepository = new CategoryRepository();

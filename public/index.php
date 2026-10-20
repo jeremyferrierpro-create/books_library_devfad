@@ -16,10 +16,12 @@ $dotenv->load();
 // importer les contrôleurs
 use App\Controller\HomeController;
 use App\Controller\CategoryController;
+use App\Controller\UserController;
 
 // instancier les contrôleurs
 $homeController = new HomeController();
 $categoryController = new CategoryController();
+$UserController = new UserController();
 
 // test des valeurs du path
 switch ($path) {
@@ -28,16 +30,9 @@ switch ($path) {
         break;
 
     case '/register':
-        $userController->register();
-        break;
-    case '/category/new':
-        $categoryController->addCategory();
-        break;
-    case '/categories':
-        $categoryController->showAllCategorie();
+        $UserController->register();
         break;
 
-    // --- Nouvelles routes pour les catégories ---
     case '/category/new':
         $categoryController->addCategory();
         break;
@@ -45,8 +40,7 @@ switch ($path) {
     case '/categories':
         $categoryController->showCategories();
         break;
-    // -------------------------------------------
-
+  
     default:
         echo "Erreur 404";
         break;
