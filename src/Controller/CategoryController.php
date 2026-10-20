@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Service\CategoryService;
-use App\Entity\Category;
 
 class CategoryController extends AbstractController
 {
@@ -15,23 +13,33 @@ class CategoryController extends AbstractController
         $this->categoryService = new CategoryService();
     }
 
+    // Exercice 7 : addCategory
     public function addCategory(): mixed
     {
-        //Test si le formulaire est soumis
-        if (isset($_POST["submit"])) {
-            //Traitement ajout de la categorie
+        $data = [];
+
+        // Test si le formulaire a été soumis
+        if (isset($_POST['submit'])) {
+            // On stocke le message de retour dans le tableau $data['msg']
             $data["msg"] = $this->categoryService->insertCategory();
         }
-        //Retourner le template + $data["msg"]
-        return $this->render('add_category', 'Ajouter une catégorie', $data ?? []);
+
+        // 1er arg : nom du template (sans le préfixe 'template_')
+        // 2ème arg : le titre de la page (string)
+        // 3ème arg : le tableau de données ($data)
+        return $this->render('add_category', 'Ajouter une catégorie', $data);
     }
 
-    public function showAllCategorie(): mixed
+    // Exercice 8 : showCategories
+    public function showCategories(): mixed
     {
-        //Récupération de la liste des categories
+        // 5. Appeler la méthode getAllCategories du Service
         $categories = $this->categoryService->getAllCategories();
 
-        //Retourner le template + $data (liste des catégories)
-        return $this->render('show_all_categories', 'Liste des catégories', $categories);
+        // 6. Appeler la render avec le titre en 2ème argument et les données en 3ème
+        return $this->render('show_all_categories', 'Liste des catégories', [
+            'title' => 'Liste des catégories',
+            'categories' => $categories
+        ]);
     }
 }

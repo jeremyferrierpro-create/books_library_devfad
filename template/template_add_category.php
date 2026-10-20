@@ -1,21 +1,27 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <title><?= $title ?? "" ?></title>
+    <title>Ajouter une catégorie</title>
 </head>
 <body>
-    <?php include 'component/navbar.php' ?>
-    <main class="container-fluid">
-        <h1>Ajouter une categorie</h1>
-        <form action="" method="post">
-            <input type="text" name="category_name" placeholder="Saisir le nom de la categorie">
-            <input type="submit" value="Ajouter" name="submit">
-        </form>
-        <p><?= $data["msg"] ?? "" ?></p>
-    </main>
+    <h1>Ajouter une nouvelle catégorie</h1>
+
+    <!-- Formulaire en POST -->
+    <form action="" method="POST">
+        <div>
+            <label for="category_name">Nom de la catégorie :</label>
+            <input type="text" id="category_name" name="category_name" required>
+        </div>
+        <div>
+            <input type="submit" name="submit" value="Ajouter">
+        </div>
+    </form>
+
+    <!-- Paragraphe pour afficher le message de succès ou d'erreur -->
+    <p><?= $data["msg"] ?? "" ?></p>
+
+    <br>
+    <a href="index.php?page=categories">Voir toutes les catégories</a>
 </body>
 </html>

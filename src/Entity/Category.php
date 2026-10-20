@@ -4,46 +4,46 @@ namespace App\Entity;
 
 class Category
 {
-    private ?int $id;
-    private string $name;
+    private ?int $id = null;
+    private ?string $categoryName = null;
 
-    public function __construct(string $name)
+    // --- HYDRATEUR ---
+    public static function hydrate(array $data): self
     {
-        $this->name = $name;
+        $category = new self();
+        
+        if (isset($data['id_category'])) {
+            $category->setId((int) $data['id_category']);
+        }
+        
+        if (isset($data['category_name'])) {
+            $category->setCategoryName($data['category_name']);
+        }
+
+        return $category;
     }
 
-    //Getters et Setters
+    // --- GETTERS & SETTERS ---
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-    
-    public function setId(?int $id): void
+    public function setId(?int $id): self
     {
         $this->id = $id;
+        return $this;
     }
 
-    public function setName(string  $name): void
+    public function getCategoryName(): ?string
     {
-        $this->name = $name;
+        return $this->categoryName;
     }
 
-    //Méthode pour transformer un tableau en objet Category
-    public static function hydrate(array $category): Category
+    public function setCategoryName(?string $categoryName): self
     {
-        //Instance de la category
-        $newCategory = new Category($category["category_name"]);
-
-        //test si categoryId existe
-        if(isset($category["id"])) {
-            $newCategory->setId($category["id"]);
-        }
-        //retourner un objet Category
-        return $newCategory;
+        $this->categoryName = $categoryName;
+        return $this;
     }
 }
