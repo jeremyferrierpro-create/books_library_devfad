@@ -8,6 +8,7 @@
         href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <title><?= $title ?? "" ?></title>
 </head>
+<?php include 'component/navbar.php'; ?>
 <body>
     <h1>Ajouter une nouvelle catégorie</h1>
 

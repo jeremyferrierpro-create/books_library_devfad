@@ -21,7 +21,7 @@ use App\Controller\UserController;
 // instancier les contrôleurs
 $homeController = new HomeController();
 $categoryController = new CategoryController();
-$UserController = new UserController();
+$userController = new UserController();
 
 // test des valeurs du path
 switch ($path) {
@@ -30,9 +30,13 @@ switch ($path) {
         break;
 
     case '/register':
-        $UserController->register();
+        $userController->register();
         break;
 
+    case '/login':
+        $userController->login();
+        break;
+        
     case '/category/new':
         $categoryController->addCategory();
         break;
@@ -40,7 +44,9 @@ switch ($path) {
     case '/categories':
         $categoryController->showCategories();
         break;
-  
+    case '/logout':
+        $userController->logout();
+        break;
     default:
         echo "Erreur 404";
         break;
