@@ -10,23 +10,16 @@
 </head>
 <?php include 'component/navbar.php'; ?>
 <body>
-    <h1>Liste des catégories</h1>
-
-    <a href="index.php?page=category/new">Ajouter une catégorie</a>
-    <hr>
-
-    <section>
-        <?php if (!empty($data['categories'])): ?>
-            <?php foreach ($data['categories'] as $category): ?>
+     <main class="container-fluid">
+        <section>
+            <!-- Block liste des catégorie -->
+            <?php foreach ($data ?? [] as $category): ?>
                 <article>
-                    <h2>ID : <?= $category->getId() ?></h2>
-                    <p>Nom : <?= htmlspecialchars($category->getCategoryName()) ?></p>
+                    <h2><?= htmlspecialchars($category->getId(), ENT_QUOTES, 'UTF-8' )?></h2>
+                    <p><?= htmlspecialchars($category->getName(), ENT_QUOTES, 'UTF-8') ?></p>
                 </article>
-                <hr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucune catégorie trouvée pour le moment.</p>
-        <?php endif; ?>
-    </section>
+            <?php endforeach ?>
+        </section>
+    </main>
 </body>
 </html>

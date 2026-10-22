@@ -3,49 +3,50 @@ include '../vendor/autoload.php';
 
 session_start();
 
-// récupération de l'URL (composante)
+//récupération de l'URL (composante)
 $url = parse_url($_SERVER["REQUEST_URI"]);
 
-// extraction du path
+//extraction du path
 $path = isset($url["path"]) ? $url["path"] : "/";
 
-// importer les variables d'environnement 
+//importer les variables d'environnement 
 $dotenv = Dotenv\Dotenv::createImmutable('../');
 $dotenv->load();
 
-// importer les contrôleurs
+//importer
 use App\Controller\HomeController;
 use App\Controller\CategoryController;
 use App\Controller\UserController;
+use App\Controller\BookController;
 
-// instancier les contrôleurs
+//instancier les controllers
 $homeController = new HomeController();
 $categoryController = new CategoryController();
 $userController = new UserController();
+$bookController = new BookController();
 
-// test des valeurs du path
+//test des valeurs du path
 switch ($path) {
     case '/':
         $homeController->home();
         break;
-
     case '/register':
         $userController->register();
         break;
-
     case '/login':
         $userController->login();
         break;
-        
+    case '/logout':
+        $userController->logout();
+        break;
     case '/category/new':
         $categoryController->addCategory();
         break;
-
     case '/categories':
-        $categoryController->showCategories();
+        $categoryController->showAllCategorie();
         break;
-    case '/logout':
-        $userController->logout();
+    case '/book/new':
+        $bookController->addBook();
         break;
     default:
         echo "Erreur 404";

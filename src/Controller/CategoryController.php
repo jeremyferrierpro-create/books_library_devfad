@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Controller\AbstractController;
 use App\Service\CategoryService;
+use App\Entity\Category;
 
 class CategoryController extends AbstractController
 {
@@ -13,33 +15,37 @@ class CategoryController extends AbstractController
         $this->categoryService = new CategoryService();
     }
 
-    // Exercice 7 : addCategory
     public function addCategory(): mixed
     {
-        $data = [];
-
-        // Test si le formulaire a été soumis
-        if (isset($_POST['submit'])) {
-            // On stocke le message de retour dans le tableau $data['msg']
-            $data["msg"] = $this->categoryService->insertCategory();
+        //Test si non connecté
+        if (!isset($_SESSION["user"]["id"])) {
+            //redirection vers la route de connexion
+            header('Location:/login');
+            exit;
+        }
+        
+        //Test droit ROLE_ADMIN
+        if (($_SESSION["user"]["grant"] ?? '') != 'ROLE_ADMIN') {
+            http_response_code(403);
+            return $this->render('error_403', '403');
         }
 
-        // 1er arg : nom du template (sans le préfixe 'template_')
-        // 2ème arg : le titre de la page (string)
-        // 3ème arg : le tableau de données ($data)
-        return $this->render('add_category', 'Ajouter une catégorie', $data);
+        //Test si le formulaire est soumis
+        if (isset($_POST["submit"])) {
+            //Traitement ajout de la categorie
+            $data = $this->categoryService->insertCategory();
+        }
+        
+        //Retourner le template + $data["msg"]
+        return $this->render('add_category', 'Ajouter une catégorie', $data ?? []);
     }
 
-    // Exercice 8 : showCategories
-    public function showCategories(): mixed
+    public function showAllCategorie(): mixed
     {
-        // 5. Appeler la méthode getAllCategories du Service
+        //Récupération de la liste des categories
         $categories = $this->categoryService->getAllCategories();
 
-        // 6. Appeler la render avec le titre en 2ème argument et les données en 3ème
-        return $this->render('show_all_categories', 'Liste des catégories', [
-            'title' => 'Liste des catégories',
-            'categories' => $categories
-        ]);
+        //Retourner le template + $data (liste des catégories)
+        return $this->render('show_all_categories', 'Liste des catégories', $categories);
     }
 }

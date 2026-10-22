@@ -7,14 +7,14 @@ use App\Entity\Category;
 class Book
 {
     //Attributs
-    private ?int $id;
+    private ?int $id = null;
     private ?string $title;
     private ?string $content;
     private ?\DateTimeImmutable $publishAt;
     private ?string $author;
-    private ?string $cover;
+    private ?string $cover = null;
     private ?\DateTimeImmutable $createdAt;
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
     private array $categories;
 
     //Constructeur
@@ -147,19 +147,22 @@ class Book
         //Set des autres attributs
         $newBook->setId($book["id_book"] ?? null);
         $newBook->setCover($book["cover"] ?? null);
-        $newBook->setCreatedAt(new \DateTimeImmutable($book["created_at"]) ?? null);
-        $newBook->setUpdatedAt(new \DateTimeImmutable($book["updated_at"]) ?? null);
-
-        //Assignation des categories
-        foreach ($book["categories"] as $category) {
+        isset($book["created_at"]) ?
+            $newBook->setCreatedAt(new \DateTimeImmutable($book["created_at"])) :
+            null;
+        isset($book["updated_at"]) ? 
+            $newBook->setCreatedAt(new \DateTimeImmutable($book["created_at"])) : 
+            null;
+        
+        foreach ($book["categories"] ?? [] as $category) {
             //Création de la catégorie
-            $newCategory = new Category($category["category_name"] ?? null);
+            $newCategory = new Category($category ?? $category["category_name"] ?? null);
             //Set de l'id
-            $newCategory->setId($category["id_category"] ?? null);
+            $newCategory->setId($category ?? $category["id_category"] ?? null);
             //Ajout à la collection de catégories
             $newBook->addCategory($newCategory);
         }
-
+        
         //Retour de l'objet Book
         return $newBook;
     }

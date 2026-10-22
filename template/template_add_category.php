@@ -24,7 +24,7 @@
     </form>
 
     <!-- Paragraphe pour afficher le message de succès ou d'erreur -->
-    <p><?= $data["msg"] ?? "" ?></p>
+    <p><?= htmlspecialchars($data["msg"] ?? "", ENT_QUOTES, 'UTF-8') ?></p>
 
     <br>
     <a href="index.php?page=categories">Voir toutes les catégories</a>
